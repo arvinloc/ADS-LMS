@@ -47,11 +47,14 @@ public class B_MergeSort {
 
         // тут ваше решение (реализуйте сортировку слиянием)
         // https://ru.wikipedia.org/wiki/Сортировка_слиянием
+
         a = mergeSort(a);
+
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return a;
     }
+
 
     int[] mergeSort(int[] arr){
         if (arr.length <= 1){
@@ -106,6 +109,7 @@ public class B_MergeSort {
 
         return result;
     }
+
 
 
 }

@@ -33,7 +33,9 @@ Sample Output:
 
 
 public class C_GetInversions {
+
     long inversions = 0;
+
     public static void main(String[] args) throws FileNotFoundException {
         InputStream stream = C_GetInversions.class.getResourceAsStream("dataC.txt");
         C_GetInversions instance = new C_GetInversions();
@@ -54,6 +56,7 @@ public class C_GetInversions {
         for (int i = 0; i < n; i++) {
             a[i] = scanner.nextInt();
         }
+
         inversions = 0;
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -117,4 +120,13 @@ public class C_GetInversions {
         return result;
     }
 
+=======
+        int result = 0;
+        //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
+
+
+        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+        return result;
+    }
+>>>>>>> origin/main
 }

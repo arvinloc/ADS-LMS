@@ -51,6 +51,37 @@ public class A_LIS {
             m[i] = scanner.nextInt();
         }
         int result = 0;
+
+        int[] P = new int[n];
+        int[] M = new int[n+1];
+
+        int L = 0;
+
+        for(int i = 0; i < n; i++){
+            int lo = 1;
+            int hi = L;
+
+            while (lo <= hi){
+                int mid = lo + (hi - lo) / 2;
+
+                if (m[M[mid]] >= m[i]){
+                    hi = mid - 1;
+                }else{
+                    lo = mid + 1;
+                }
+            }
+            int newL = lo;
+
+            P[i] = M[newL - 1];
+            M[newL] = i;
+
+            if (newL > L){
+                L = newL;
+            }
+
+        }
+
+        result = L;
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }

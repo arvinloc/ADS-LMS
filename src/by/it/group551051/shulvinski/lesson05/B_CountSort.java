@@ -40,6 +40,32 @@ public class B_CountSort {
         }
         //тут реализуйте логику задачи с применением сортировки подсчетом
 
+        int max = points[0];
+        // нахождение максимального элемента в исходном массиве
+        for (int i = 1; i < points.length; i++){
+            if (points[i] > max){
+                max = points[i];
+            }
+        }
+
+        // создание массива-счетчика
+        int[] sub_arr = new int[max+1];
+
+        int ind = 0;
+
+        // заполнение массива-счетчика
+        for (int i = 0; i < points.length;i++){
+            sub_arr[points[i]]++;
+        }
+
+        // заполнение исходного массива в соответствии со счетчиком
+        for (int val = 0; val < sub_arr.length;val++){
+            for (int j = 0; j < sub_arr[val];j++){
+                points[ind++] = val;
+            }
+        }
+
+
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return points;

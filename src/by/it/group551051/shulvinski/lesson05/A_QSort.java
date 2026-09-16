@@ -69,10 +69,126 @@ public class A_QSort {
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
+        quickSortSegments(segments,0,n-1);
 
+        int[] stopCamera = new int[n];
+
+        for (int i = 0; i < n; i++){
+            stopCamera[i] = segments[i].stop;
+        }
+        quickSort(stopCamera,0,n-1);
+
+
+        for(int i = 0; i < m;i++){
+            int point = points[i];
+
+            int start = upperBoundStart(segments,point);
+            int end = upperBoundEnd(stopCamera,point);
+
+            result[i] = start - end;
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
+
+     int upperBoundEnd(int[] stopCamera, int point) {
+         int left = 0;
+         int right = stopCamera.length;
+
+         while (left < right){
+             int mid = (left + right) / 2;
+
+             if(stopCamera[mid] < point){
+                 left = mid + 1;
+             }else{
+                 right = mid;
+             }
+         }
+         return left;
+    }
+
+     int upperBoundStart(Segment[] segments, int point) {
+        int left = 0;
+        int right = segments.length;
+
+        while (left < right){
+            int mid = (left + right) / 2;
+
+            if(segments[mid].start <= point){
+                left = mid + 1;
+            }else{
+                right = mid;
+            }
+        }
+        return left;
+    }
+
+
+    int[] quickSort(int[] arr,int low,int high){
+        if (low < high){
+
+            int pivot_index = partition(arr,low,high);
+
+            quickSort(arr,low,pivot_index-1);
+            quickSort(arr,pivot_index + 1, high);
+        }
+        return arr;
+    }
+
+    private int partition(int[] arr, int low, int high) {
+        int pivot = arr[high];
+        int i = low - 1;
+
+        for(int j = low; j < high;j++){
+            if (arr[j] < pivot){
+                i++;
+                swap(arr,i,j);
+            }
+
+        }
+        swap(arr,i+1,high);
+        return i+1;
+    }
+
+    void swap(int[] arr, int i, int j) {
+        int tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+    }
+
+
+    Segment[] quickSortSegments(Segment[] arr,int low,int high){
+        if (low < high){
+
+            int pivot_index = partitionSegments(arr,low,high);
+
+            quickSortSegments(arr,low,pivot_index-1);
+            quickSortSegments(arr,pivot_index + 1, high);
+        }
+        return arr;
+    }
+
+    private int partitionSegments(Segment[] arr, int low, int high) {
+        Segment pivot = arr[high];
+        int i = low - 1;
+
+        for(int j = low; j < high;j++){
+            if (arr[j].compareTo(pivot) < 0){
+                i++;
+                swapSegments(arr,i,j);
+            }
+
+        }
+        swapSegments(arr,i+1,high);
+        return i+1;
+    }
+
+    void swapSegments(Segment[] arr, int i, int j) {
+        Segment tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+    }
+
 
     //отрезок
     private class Segment implements Comparable<Segment> {
@@ -84,13 +200,18 @@ public class A_QSort {
             this.stop = stop;
             //тут вообще-то лучше доделать конструктор на случай если
             //концы отрезков придут в обратном порядке
+
+            if(stop < start){
+                this.start = stop;
+                this.stop = start;
+            }
         }
 
         @Override
         public int compareTo(Segment o) {
             //подумайте, что должен возвращать компаратор отрезков
 
-            return 0;
+            return Integer.compare(this.start,o.start);
         }
     }
 

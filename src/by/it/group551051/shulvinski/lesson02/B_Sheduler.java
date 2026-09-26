@@ -39,15 +39,15 @@ public class B_Sheduler {
         Arrays.sort(events, Comparator.comparingInt((Event e) -> e.stop)
                 .thenComparingInt(e->e.start));
 
-        int lastStop = from - 1;
+        int lastStop = from - 1; // момент окончания последнего события
 
         for (Event e: events){
             if (e.start < from || e.stop > to){
-                continue;
+                continue; // пропуск события вне заданного периода
             }
             if(e.start >= lastStop){
                 result.add(e);
-                lastStop = e.stop;
+                lastStop = e.stop; // запоминание момента окончания занятости
             }
         }
 

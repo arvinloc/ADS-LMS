@@ -53,9 +53,9 @@ public class C_GreedyKnapsack {
 
         Arrays.sort(items);
 
-        int remain = W;
+        int remain = W; // оставшееся место в рюкзаке
 
-        for (Item i: items){
+        for (Item i: items){ // перебор предметов начиная от самого выгодного
             if (remain <= 0){
                 break;
             }
@@ -63,7 +63,7 @@ public class C_GreedyKnapsack {
                 result += i.cost;
                 remain -= i.weight;
             }else{
-                result += (double) i.weight * remain / i.weight;
+                result += (double) i.weight * remain / i.weight; // если предмет не влезает целиком то отрезается нужный кусок
             }
         }
         System.out.printf("Удалось собрать рюкзак на сумму %f\n", result);

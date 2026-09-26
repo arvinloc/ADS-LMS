@@ -31,15 +31,16 @@ public class A_VideoRegistrator {
         //Подготовка к жадному поглощению массива событий
         //hint: сортировка Arrays.sort обеспечит скорость алгоритма
         //C*(n log n) + C1*n = O(n log n)
-        Arrays.sort(events);
+        Arrays.sort(events); // сортровка событий по времени
         int n = events.length;
 
+        // пока есть зарегистрированные события
         while(i < n){
 
-            double start = events[i];
+            double start = events[i]; // самое раннее непокрытое событие
             result.add(start);
 
-            double end = start + workDuration;
+            double end = start + workDuration; // вычисление момента когда видеокамера закончит работу
 
             while (i < n && events[i] <= end){
                 i++;

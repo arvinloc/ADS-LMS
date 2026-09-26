@@ -99,6 +99,8 @@ public class C_GetInversions {
                 result[resultIndex] = left[leftIndex];
                 leftIndex++;
             }else{
+                // эдемент справа меньше всех оставшихся элементов слева
+                // каждый из них вместе с ним образует инверсию
                 inversions += left.length - leftIndex;
                 result[resultIndex] = right[rightIndex];
                 rightIndex++;

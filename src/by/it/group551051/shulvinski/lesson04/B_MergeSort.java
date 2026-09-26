@@ -60,42 +60,45 @@ public class B_MergeSort {
         if (arr.length <= 1){
             return arr;
         }
-        int mid = arr.length  / 2;
+        int mid = arr.length  / 2; // делится массив пополам
 
         int[] left = new int[mid];
         int[] right = new int[arr.length - mid];
 
         for (int i = 0; i < mid; i++){
-            left[i] = arr[i];
+            left[i] = arr[i]; // комирование левой половины
         }
 
         for (int i = mid; i < arr.length; i++){
-            right[i - mid] = arr[i];
+            right[i - mid] = arr[i]; // копирование правой половины
         }
 
         return merge(mergeSort(left),
-                mergeSort(right));
+                mergeSort(right)); // рекурсивный вызов для сортировки левой и правой половины
     }
 
     int[] merge(int[] left, int[] right) {
+        // результирующий отсортированный массив
         int[] result = new int[left.length + right.length];
 
         int leftIndex = 0;
         int rightIndex = 0;
         int resultIndex = 0;
 
+        // пока в обеих половинах есть непросмотренные элементы
         while(leftIndex < left.length
         && rightIndex < right.length){
             if (left[leftIndex] < right[rightIndex]){
-                result[resultIndex] = left[leftIndex];
+                result[resultIndex] = left[leftIndex]; // берем меньший элемент слева
                 leftIndex++;
             }else{
-                result[resultIndex] = right[rightIndex];
+                result[resultIndex] = right[rightIndex]; // меньший эоемент справа
                 rightIndex++;
             }
             resultIndex++;
         }
 
+        // дописывание в конец оставшихся элементов обеих половин
         while(leftIndex < left.length){
             result[resultIndex] = left[leftIndex];
             leftIndex++;

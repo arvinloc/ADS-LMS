@@ -38,7 +38,17 @@ public class B_Knapsack {
         }
 
 
-        int result = 0;
+        // рюкзак без повторов каждый слиток используется не более одного раза,
+        // поэтому идём по capacity в обратном порядке (0/1 knapsack)
+        int[] dp = new int[w + 1];
+        for (int i = 0; i < n; i++) {
+            for (int capacity = w; capacity >= gold[i]; capacity--) {
+                dp[capacity] = Math.max(dp[capacity], dp[capacity - gold[i]] + gold[i]);
+            }
+        }
+
+        int result = dp[w];
+
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }

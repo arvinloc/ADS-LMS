@@ -156,24 +156,25 @@ public class C_QSortOptimized {
     }
     void quickSortCamera(int[] cameras, int low, int high){
         while (low < high) {
-            int lt = low;
-            int gt = high;
+            int lt = low; // граница меньше опорного
+            int gt = high; // граница больше опорного
 
-            int pivot = cameras[low + (high - low) / 2];
+            int pivot = cameras[low + (high - low) / 2]; // опорный элемень
 
             int i = low;
-
+            // проход по диапазону с разбиением на 3 части
             while (i <= gt) {
 
                 if (cameras[i] < pivot) {
-                    swapCameras(cameras,lt++,i++);
+                    swapCameras(cameras,lt++,i++); // элемент меньший опорного переносим в левую часть
                 } else if(cameras[i] > pivot){
-                    swapCameras(cameras,i,gt--);
+                    swapCameras(cameras,i,gt--); // элемент больший опорного переносим в правую часть
                 }else{
-                    i++;
+                    i++; // элемент равный опорному оставляем на месте
                 }
 
             }
+            // хвостовая оптимищзация (обработка меньшей из двух частей, а по большей цикл)
             if(lt - low < high - gt){
                 quickSortCamera(cameras,low,lt-1);
                 low = gt + 1;

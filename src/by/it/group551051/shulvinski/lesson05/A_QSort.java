@@ -69,23 +69,24 @@ public class A_QSort {
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
-        quickSortSegments(segments,0,n-1);
+        quickSortSegments(segments,0,n-1); // сортировка отрезков по времени для дальнейшего бинарного поиска
 
         int[] stopCamera = new int[n];
 
         for (int i = 0; i < n; i++){
-            stopCamera[i] = segments[i].stop;
+            stopCamera[i] = segments[i].stop; // все моменты окончания работы камер
         }
         quickSort(stopCamera,0,n-1);
 
 
         for(int i = 0; i < m;i++){
             int point = points[i];
-
+            // число отрезков которые начались к моменту point
             int start = upperBoundStart(segments,point);
+            // число отрезков которые закончились до момента point
             int end = upperBoundEnd(stopCamera,point);
 
-            result[i] = start - end;
+            result[i] = start - end; // разница дает число отрезков которые покрывают точку входа
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
@@ -156,30 +157,30 @@ public class A_QSort {
         arr[j] = tmp;
     }
 
-
+    // обычный quick sort для кастомного объекта
     Segment[] quickSortSegments(Segment[] arr,int low,int high){
         if (low < high){
 
-            int pivot_index = partitionSegments(arr,low,high);
+            int pivot_index = partitionSegments(arr,low,high); // опорный элемент
 
-            quickSortSegments(arr,low,pivot_index-1);
-            quickSortSegments(arr,pivot_index + 1, high);
+            quickSortSegments(arr,low,pivot_index-1); // рекурсивная сортировка слева от опорного
+            quickSortSegments(arr,pivot_index + 1, high);// рекурсивная сортировка справа от опорного
         }
         return arr;
     }
 
     private int partitionSegments(Segment[] arr, int low, int high) {
         Segment pivot = arr[high];
-        int i = low - 1;
+        int i = low - 1; // граница уже отработанной части где все элементы меньше опорного
 
         for(int j = low; j < high;j++){
             if (arr[j].compareTo(pivot) < 0){
                 i++;
-                swapSegments(arr,i,j);
+                swapSegments(arr,i,j); // перенос элемента меньше опорного в левую часть
             }
 
         }
-        swapSegments(arr,i+1,high);
+        swapSegments(arr,i+1,high); // постановка опорного эелемента на место между частями
         return i+1;
     }
 

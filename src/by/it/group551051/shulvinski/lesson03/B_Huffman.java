@@ -60,8 +60,9 @@ public class B_Huffman {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение
 
-        Map<String,Character> codeToMap = new HashMap<>();
+        Map<String,Character> codeToMap = new HashMap<>(); // хеш таблица для быстрого декодирования
 
+        // чтение всех пар
         for (int i = 0; i < count;i++){
             String token = scanner.next();
             Character letter = token.charAt(0);
@@ -69,17 +70,19 @@ public class B_Huffman {
 
             codeToMap.put(code, letter);
         }
-
+        // чтение закодированной строки
         String encodedString = scanner.next();
 
         StringBuilder prefixBuilder = new StringBuilder();
 
+        // проход по закодирванной строке наращивая префикс
         for (int i = 0; i < encodedString.length(); i++){
-            prefixBuilder.append(encodedString.charAt(i));
+            prefixBuilder.append(encodedString.charAt(i)); // добавление бита к текущему префиксу
 
             if (codeToMap.containsKey(prefixBuilder.toString())){
+                // если код найден, то добавляется расшифрованный символ
                 result.append(codeToMap.get(prefixBuilder.toString()));
-                prefixBuilder.setLength(0);
+                prefixBuilder.setLength(0); // prefixBuilder обнуляется
             }
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1

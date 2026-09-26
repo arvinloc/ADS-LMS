@@ -95,11 +95,12 @@ public class C_LongNotUpSubSeq {
         int k = M[L];
 
         for (int i = L -1; i >= 0; i--){
-            subseq[i] = k + 1;
-            k = P[k];
+            subseq[i] = k + 1; // запоминание индекса со сдвигом на 1
+            k = P[k]; // переход к предыдущему элементу цепочки
 
         }
 
+        // форматированный вывод результата
         StringBuilder sb = new StringBuilder();
 
         sb.append(L).append("\n");

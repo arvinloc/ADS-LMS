@@ -31,11 +31,11 @@ public class FiboC {
 
         for(int i = 0; i < 6L * m; i++){
             long t = curr;
-            curr = (curr + prev) % m;
+            curr = (curr + prev) % m; // вычисление следующего остатка последовательносии фибоначчи
             prev = t;
 
             if (prev == 0 && curr == 1){
-                return i + 1;
+                return i + 1; // последовательность остатков зациклилась - найден период
             }
         }
         return 0;
@@ -44,22 +44,22 @@ public class FiboC {
         //Интуитивно найти решение не всегда просто и
         //возможно потребуется дополнительный поиск информации
 
-        long pisanoPeriod = getPisanoPeriod(m);
+        long pisanoPeriod = getPisanoPeriod(m); // нахождение периода пизано по модулю m
 
-        n = n % pisanoPeriod;
+        n = n % pisanoPeriod; // сокращение до размера периода для оптимизации вычислений
 
         if (n < 2){
-            return n;
+            return n; // базовый случай
         }
         long prev = 0;
         long curr = 1;
 
         for (long i = 0; i < n - 1; i++){
             long t = curr;
-            curr = (curr + prev) % m;
+            curr = (curr + prev) % m; // вычисление числа фибоначчи по модулю m
             prev = t;
         }
-        return curr;
+        return curr; // результатом является остаток от деления
     }
 
 

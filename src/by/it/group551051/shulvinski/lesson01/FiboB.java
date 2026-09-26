@@ -26,19 +26,22 @@ public class FiboB {
         //здесь нужно реализовать вариант с временем O(n) и памятью O(n)
 
         if (n < 2){
-            BigInteger.valueOf(n);
+            BigInteger.valueOf(n); // базовый случай рекурсии
         }
 
+        // вспомогательный массив для хранения посчитанных чисел
         BigInteger[] fibArr = new BigInteger[n+1];
 
+
+        // определение двух первых чисел
         fibArr[0] = BigInteger.ZERO;
         fibArr[1] = BigInteger.ONE;
 
         for (int i = 2; i <= n; i++){
-            fibArr[i] = fibArr[i-1].add(fibArr[i-2]);
+            fibArr[i] = fibArr[i-1].add(fibArr[i-2]); // сложение в цикле
         }
 
-        return fibArr[n];
+        return fibArr[n]; // последний посчитанный элемент
     }
 
 }

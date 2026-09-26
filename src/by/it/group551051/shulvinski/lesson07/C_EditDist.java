@@ -2,6 +2,8 @@ package by.it.group551051.shulvinski.lesson07;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /*
@@ -51,8 +53,54 @@ public class C_EditDist {
     String getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
 
+        List<String> ops = new ArrayList<>();
+        int n = one.length();
+        int m = two.length();
+        int[][] d = new int[n + 1][m + 1];
 
-        String result = "";
+        for (int i = 0; i <= n; i++) d[i][0] = i;
+        for (int j = 0; j <= m; j++) d[0][j] = j;
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                if (one.charAt(i - 1) == two.charAt(j - 1)) {
+                    d[i][j] = d[i - 1][j - 1];
+                } else {
+                    int insert = d[i][j - 1];
+                    int delete = d[i - 1][j];
+                    int replace = d[i - 1][j - 1];
+                    d[i][j] = 1 + Math.min(insert, Math.min(delete, replace));
+                }
+            }
+        }
+
+        int i = n, j = m;
+        while (i > 0 || j > 0) {
+            if (i > 0 && j > 0 && one.charAt(i - 1) == two.charAt(j - 1)) {
+                ops.add("#");
+                i--;
+                j--;
+            } else if (i > 0 && j > 0 && d[i][j] == d[i - 1][j - 1] + 1) {
+                ops.add("~" + two.charAt(j - 1));
+                i--;
+                j--;
+            } else if (i > 0 && d[i][j] == d[i - 1][j] + 1) {
+                ops.add("-" + one.charAt(i - 1));
+                i--;
+            } else {
+                ops.add("+" + two.charAt(j - 1));
+                j--;
+            }
+        }
+        java.util.Collections.reverse(ops);
+
+        StringBuilder sb = new StringBuilder();
+        for (String op : ops) {
+            sb.append(op).append(",");
+        }
+
+        String result = sb.toString();
+
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }

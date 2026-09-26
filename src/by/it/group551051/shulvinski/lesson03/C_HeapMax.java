@@ -45,7 +45,7 @@ public class C_HeapMax {
     //эта процедура читает данные из файла, ее можно не менять.
     Long findMaxValue(InputStream stream) {
         Long maxValue = 0L;
-        MaxHeap heap = new MaxHeap();
+        MaxHeap<Long> heap = new MaxHeap<>();
         //прочитаем строку для кодирования из тестового файла
         Scanner scanner = new Scanner(stream);
         Integer count = scanner.nextInt();
@@ -68,35 +68,37 @@ public class C_HeapMax {
         return maxValue;
     }
 
-    private class MaxHeap {
+    private class MaxHeap<T extends Comparable<T>> {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение.
         //Будет мало? Ну тогда можете его собрать как Generic и/или использовать в варианте B
-        private List<Long> heap = new ArrayList<>();
+        private List<T> heap = new ArrayList<>();
 
         int siftDown(int i) { //просеивание вниз
             while(true){
-                int l = i * 2 + 1;
-                int r = i * 2 + 2;
-                int m = i;
+                int l = i * 2 + 1; // вычисление индекса левого потомка
+                int r = i * 2 + 2; // вычисление индекса правого потомка
+                int m = i; //
 
 
-                if(l < heap.size() && heap.get(l) > heap.get(m)){
-                    m = l;
+                if(l < heap.size() && heap.get(l).compareTo(heap.get(m)) > 0){
+                    m = l; // обновление кандидата на максимум
                 }
 
-                if(r < heap.size() && heap.get(r) > heap.get(m)){
-                    m = r;
+                if(r < heap.size() && heap.get(r).compareTo(heap.get(m))> 0){
+                    m = r; // обновление кандидата на максимум
                 }
 
                 if(m == i){
                     break;
                 }
-                Long temp = heap.get(i);
+
+                // изменение узлов местами
+                T temp = heap.get(i);
                 heap.set(i,heap.get(m));
                 heap.set(m,temp);
 
-                i = m;
+                i = m; // просеивание вниз с новой позиции
             }
 
 
@@ -106,10 +108,10 @@ public class C_HeapMax {
         int siftUp(int i) { //просеивание вверх
             while(i > 0){
                 int p = (i -1) / 2;
-                if (heap.get(i) > heap.get(p)){
+                if (heap.get(i).compareTo(heap.get(p)) > 0){
 
-                    Long temp = heap.get(i);
-                    heap.set(i,heap.get(p));
+                    T temp = heap.get(i);
+                    heap.set(i,heap.get(p)); // поднятие элемента выше
                     heap.set(p,temp);
                     i = p;
                 }else{
@@ -120,7 +122,7 @@ public class C_HeapMax {
             return i;
         }
 
-        void insert(Long value) { //вставка
+        void insert(T value) { //вставка
 
             heap.add(value);
             siftUp(heap.size() -1);
@@ -128,15 +130,16 @@ public class C_HeapMax {
 
         }
 
-        Long extractMax() { //извлечение и удаление максимума
+        T extractMax() { //извлечение и удаление максимума
             if (heap.isEmpty()){
                 return null;
             }
-            Long result = heap.get(0);
-            Long last = heap.remove(heap.size() - 1);
+            T result = heap.get(0); // получение максимума
+
+            T last = heap.remove(heap.size() - 1); // получение и удаление последнего элемента
             if (!heap.isEmpty()){
-                heap.set(0,last);
-                siftDown(0);
+                heap.set(0,last); // постановка бывшего последнего элемента на место корня
+                siftDown(0); // просеивание его вниз до восстановления порядка кучи
             }
 
 
